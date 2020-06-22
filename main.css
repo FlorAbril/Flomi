@@ -9,16 +9,11 @@ canvas{
     border-color: #000000;
     border-style: solid;
 }
-#boton_dibujar{
+.boton{
     cursor: pointer;
     width: 30px;
 }
-#boton_borrar{
-    cursor: pointer;
-}
-#boton_borrar_todo{
-    cursor: pointer;
-}
+
 .contenedor{
     background-color: coral;
     display: flex;
@@ -33,16 +28,23 @@ canvas{
 }
 
 .color{
+    display: inline-block;
     width: 30px;
     height: 30px;
     border: 2px solid white;
     margin: 2px;
 }
 .colores{
+    margin-top: 10px;
     width: 20vw;
     display: flex;
     flex-flow: wrap;
 }
 #grosor{
     width: 30px;
+}
+#colorEnUso{
+    margin: 0;
+    width: 26px;
+    height: 26px;
 }

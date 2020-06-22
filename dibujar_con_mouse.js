@@ -5,6 +5,7 @@ const boton_borrar = document.getElementById("boton_borrar");
 const boton_dibujar = document.getElementById("boton_dibujar");
 const contenedorColores = document.querySelector(".colores");
 const grosorInput = document.getElementById("grosor");
+const colorEnUso = document.getElementById("colorEnUso");
 let x_dibujo; //donde comienza el trazo de dibujo
 let y_dibujo;
 let dibujando = false;
@@ -14,10 +15,19 @@ const estadoLapiz = {
     grosorActual : 10,
     formaActual: "round"
 }
-grosorInput.value = estadoLapiz.grosorActual;
-grosorInput.oninput = (evento) => {
-    estadoLapiz.grosorActual = parseInt(grosorInput.value);
+const estadoGoma = {
+    colorActual : "white",
+    grosorActual : 10,
+    formaActual: "round"
 }
+
+let estadoActual = estadoLapiz;
+
+
+grosorInput.oninput = (evento) => {
+    estadoActual.grosorActual = parseInt(grosorInput.value);
+}
+
 
 cuadro.width = innerWidth * 0.75;
 cuadro.height = innerHeight * 0.9;
@@ -37,10 +47,16 @@ document.addEventListener("mouseup", dibujoOBorradorInactivo);
 dibujar();
 
 function borrar() {
-    estadoLapiz.colorActual = "white";
+    estadoActual = estadoGoma;
+    grosorInput.value = estadoActual.grosorActual;
+    colorEnUso.style.backgroundColor = estadoActual.colorActual;
 }
 function dibujar() {
     cuadro.onmousedown = dibujoActivo;
+    estadoActual = estadoLapiz;
+    grosorInput.value = estadoActual.grosorActual;
+    colorEnUso.style.backgroundColor = estadoActual.colorActual;
+
 }
 
 
@@ -82,8 +98,12 @@ const crearColor = (colorName) =>{
     const color = document.createElement('div');
     color.className = "color"
     color.style.background = colorName
-    color.onclick = ()=> estadoLapiz.colorActual = colorName;
+    color.onclick = ()=> {
+        estadoActual.colorActual = colorName
+        colorEnUso.style.backgroundColor = estadoActual.colorActual;
+    };
     contenedorColores.appendChild(color);
+
 }
 
 const colores = ["blue","green","red","orange","yellow","pink","purple","black","white","grey","brown","violet","teal","lightblue","darkblue","turquoise","lightgreen","darkgreen","lavender","magenta","fuchsia","lime","coral","gold","silver","beige	","cyan","maroon","salmon","tan","aquamarine","crimson"];
@@ -92,10 +112,9 @@ colores.map((color)=>crearColor(color))
 
 // dibujar una linea
 function dibujarLineas(xinicial, yinicial, xfinal, yfinal) {
-
     papel.beginPath();
-    papel.strokeStyle = estadoLapiz.colorActual;
-    papel.lineWidth = estadoLapiz.grosorActual;
+    papel.strokeStyle = estadoActual.colorActual;
+    papel.lineWidth = estadoActual.grosorActual;
     papel.lineCap= "round";
     // papel.lineJoin="round"
     papel.moveTo(xinicial, yinicial);
