@@ -6,28 +6,25 @@
     <title>Dibujando con el mouse</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <link id="favicon" rel="shortcut icon" type="image/png" href="./assets/flomilogo.png" >
     
 </head>
 <body>
-    <div class="contenedor">
-        <div class="elemento">
-            <canvas id="area_de_dibujo"></canvas>
-        </div>
-        <div class="elemento">
-        <div>
-            <p>Usa el mouse para dibujar</p>
-            <input type="text" id="grosor">
+    <header>
+        <img src="./assets/flomi.png" id="logo" title="Flomi <3"></img>
+    </header>
+    <canvas id="area_de_dibujo"></canvas>
+    <div class="elemento">
+        <div class="tools">
+            <input type="text" id="grosor" title="Grosor">
             
-            <img src="https://image.flaticon.com/icons/svg/88/88637.svg" id="boton_dibujar"  class="boton"></img>
-            <img src= "https://image.flaticon.com/icons/svg/2206/2206133.svg"id="boton_borrar" class="boton"></img>
-            <img src="https://image.flaticon.com/icons/svg/88/88666.svg"id="boton_borrar_todo" class="boton"></img>
-            <img src="https://image.flaticon.com/icons/svg/3050/3050705.svg"id="boton_balde" class="boton"></img>
-            <div class="color" id="colorEnUso"></div>
+            <img src="./assets/lapiz.png" id="boton_dibujar"  class="boton" title="Dibujar"></img>
+            <img src= "./assets/borrador.png"id="boton_borrar" class="boton" title="Borrar"></img>
+            <img src="./assets/tacho.png"id="boton_borrar_todo" class="boton" title="Borrar Todo"></img>
+            <img src="./assets/balde.png"id="boton_balde" class="boton" title="Rellenar"></img>
+            <div class="color" id="colorEnUso" title="Color"></div>
         </div>
-        <div class="colores">
-        </div>
-        </div>
-       
+        <div class="colores"></div>
     </div>
     
     <script src='dibujar_con_mouse.js'></script>

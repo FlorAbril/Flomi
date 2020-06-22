@@ -6,6 +6,7 @@ const boton_dibujar = document.getElementById("boton_dibujar");
 const contenedorColores = document.querySelector(".colores");
 const grosorInput = document.getElementById("grosor");
 const colorEnUso = document.getElementById("colorEnUso");
+const boton_balde = document.getElementById("boton_balde");
 let x_dibujo; //donde comienza el trazo de dibujo
 let y_dibujo;
 let dibujando = false;
@@ -24,16 +25,15 @@ const estadoGoma = {
 let estadoActual = estadoLapiz;
 
 
-grosorInput.oninput = (evento) => {
-    estadoActual.grosorActual = parseInt(grosorInput.value);
-}
+grosorInput.onkeypress = (evento) => {isNaN(evento.key) && evento.preventDefault();}
+grosorInput.oninput = () => {estadoActual.grosorActual = parseInt(grosorInput.value)}    
 
 
 cuadro.width = innerWidth * 0.75;
 cuadro.height = innerHeight * 0.9;
 
 /////// boton de borrar todo
-boton_borrar_todo.onclick = borrarTodo;
+boton_borrar_todo.onclick =  borrarTodo;
 
 //////////boton de borrar
 boton_borrar.onclick = borrar;
@@ -41,21 +41,33 @@ boton_borrar.onclick = borrar;
 /////////// boton de dibujar 
 boton_dibujar.onclick = dibujar;
 
+// boton balde
+boton_balde.onclick = pintar;
+
+cuadro.onmousedown = dibujoActivo;
+
 cuadro.addEventListener("mousemove", dibujarOBorrarConMouse);
 document.addEventListener("mouseup", dibujoOBorradorInactivo);
 
 dibujar();
+boton_dibujar.style.borderStyle = "inset";
+
 
 function borrar() {
     estadoActual = estadoGoma;
     grosorInput.value = estadoActual.grosorActual;
     colorEnUso.style.backgroundColor = estadoActual.colorActual;
+    boton_borrar.style.borderStyle = "inset";
+    boton_dibujar.style.borderStyle = "outset";
+    
 }
 function dibujar() {
-    cuadro.onmousedown = dibujoActivo;
     estadoActual = estadoLapiz;
     grosorInput.value = estadoActual.grosorActual;
     colorEnUso.style.backgroundColor = estadoActual.colorActual;
+    boton_dibujar.style.borderStyle = "inset";
+    boton_borrar.style.borderStyle = "outset";
+
 
 }
 
@@ -94,21 +106,32 @@ function borrarTodo() {
     }
 }
 
+function pintar(){
+    papel.fillStyle= estadoActual.colorActual;
+    papel.fillRect(0,0,cuadro.width,cuadro.height);
+}
+
 const crearColor = (colorName) =>{
     const color = document.createElement('div');
     color.className = "color"
     color.style.background = colorName
+    color.title = colorName
     color.onclick = ()=> {
         estadoActual.colorActual = colorName
-        colorEnUso.style.backgroundColor = estadoActual.colorActual;
+        colorEnUso.style.background = estadoActual.colorActual;
     };
     contenedorColores.appendChild(color);
 
 }
 
-const colores = ["blue","green","red","orange","yellow","pink","purple","black","white","grey","brown","violet","teal","lightblue","darkblue","turquoise","lightgreen","darkgreen","lavender","magenta","fuchsia","lime","coral","gold","silver","beige	","cyan","maroon","salmon","tan","aquamarine","crimson"];
+const colores = ["blue","green","red","orange","yellow","pink",
+                "purple","black","white","grey","brown","violet",
+                "teal","lightblue","darkblue","turquoise","lightgreen",
+                "darkgreen","lavender","magenta","fuchsia","lime","coral",
+                "gold","silver","beige","cyan","maroon","salmon","tan",
+                "aquamarine","crimson","#7485e2", "#8fd84b"]; 
 
-colores.map((color)=>crearColor(color))
+colores.map((color)=>crearColor(color));
 
 // dibujar una linea
 function dibujarLineas(xinicial, yinicial, xfinal, yfinal) {
