@@ -4,12 +4,20 @@ const boton_borrar_todo = document.getElementById("boton_borrar_todo");
 const boton_borrar = document.getElementById("boton_borrar");
 const boton_dibujar = document.getElementById("boton_dibujar");
 const contenedorColores = document.querySelector(".colores");
+const grosorInput = document.getElementById("grosor");
 let x_dibujo; //donde comienza el trazo de dibujo
 let y_dibujo;
 let dibujando = false;
-let borrando = false;
-let colorActual = "black";
-let formaActual = "round";
+
+const estadoLapiz = {
+    colorActual : "black",
+    grosorActual : 10,
+    formaActual: "round"
+}
+grosorInput.value = estadoLapiz.grosorActual;
+grosorInput.oninput = (evento) => {
+    estadoLapiz.grosorActual = parseInt(grosorInput.value);
+}
 
 cuadro.width = innerWidth * 0.75;
 cuadro.height = innerHeight * 0.9;
@@ -29,45 +37,31 @@ document.addEventListener("mouseup", dibujoOBorradorInactivo);
 dibujar();
 
 function borrar() {
-    // cuadro.onmousedown = borradorActivo;
-    colorActual = "white";
-    formaActual = "butt"
+    estadoLapiz.colorActual = "white";
 }
 function dibujar() {
     cuadro.onmousedown = dibujoActivo;
 }
 
-// function borradorActivo(evento) {
-//     papel.clearRect(evento.offsetX, evento.offsetY, 30, 30);
-//     borrando = true;
-//     dibujando = false;
-// }
+
 function dibujoActivo(evento) {
     x_dibujo = evento.offset;
     y_dibujo = evento.offsetY;
     dibujando = true;
-    // borrando = false;
 }
 
 
 function dibujarOBorrarConMouse(evento) {
     if (dibujando === true) {
-        dibujarLineas(colorActual, x_dibujo, y_dibujo, evento.offsetX, evento.offsetY, papel);
+        dibujarLineas( x_dibujo, y_dibujo, evento.offsetX, evento.offsetY);
         x_dibujo = evento.offsetX;
         y_dibujo = evento.offsetY;
     }
-    // if (borrando === true) {
-    //     papel.clearRect(evento.offsetX, evento.offsetY, 20, 20);
-    // }
 }
 
 function dibujoOBorradorInactivo(evento) {
-    // if (borrando === true) {
-    //     papel.clearRect(evento.offsetX, evento.offsetY, 20, 20);
-    //     borrando = false;
-    // }
     if (dibujando === true) {
-        dibujarLineas(colorActual, x_dibujo, y_dibujo, evento.offsetX, evento.offsetY, papel, formaActual);
+        dibujarLineas(x_dibujo, y_dibujo, evento.offsetX, evento.offsetY);
         x_dibujo = 0;
         y_dibujo = 0;
         dibujando = false;
@@ -88,7 +82,7 @@ const crearColor = (colorName) =>{
     const color = document.createElement('div');
     color.className = "color"
     color.style.background = colorName
-    color.onclick = ()=> colorActual = colorName;
+    color.onclick = ()=> estadoLapiz.colorActual = colorName;
     contenedorColores.appendChild(color);
 }
 
@@ -97,15 +91,16 @@ const colores = ["blue","green","red","orange","yellow","pink","purple","black",
 colores.map((color)=>crearColor(color))
 
 // dibujar una linea
-function dibujarLineas(color, xinicial, yinicial, xfinal, yfinal, lienzo, forma) {
-    lienzo.beginPath();
-    lienzo.strokeStyle = color;
-    lienzo.lineWidth = 12;
-    lienzo.lineCap= "round";
-    // lienzo.lineJoin="round"
-    lienzo.moveTo(xinicial, yinicial);
-    lienzo.lineTo(xfinal, yfinal);
-    lienzo.stroke();
-    lienzo.closePath();
+function dibujarLineas(xinicial, yinicial, xfinal, yfinal) {
+
+    papel.beginPath();
+    papel.strokeStyle = estadoLapiz.colorActual;
+    papel.lineWidth = estadoLapiz.grosorActual;
+    papel.lineCap= "round";
+    // papel.lineJoin="round"
+    papel.moveTo(xinicial, yinicial);
+    papel.lineTo(xfinal, yfinal);
+    papel.stroke();
+    papel.closePath();
 }
 

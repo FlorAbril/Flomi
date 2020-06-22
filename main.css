@@ -43,3 +43,6 @@ canvas{
     display: flex;
     flex-flow: wrap;
 }
+#grosor{
+    width: 30px;
+}
