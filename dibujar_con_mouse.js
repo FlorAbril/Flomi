@@ -50,23 +50,20 @@ cuadro.addEventListener("mousemove", dibujarOBorrarConMouse);
 document.addEventListener("mouseup", dibujoOBorradorInactivo);
 
 dibujar();
-boton_dibujar.style.borderStyle = "inset";
+
 
 
 function borrar() {
     estadoActual = estadoGoma;
     grosorInput.value = estadoActual.grosorActual;
     colorEnUso.style.backgroundColor = estadoActual.colorActual;
-    boton_borrar.style.borderStyle = "inset";
-    boton_dibujar.style.borderStyle = "outset";
+   
     
 }
 function dibujar() {
     estadoActual = estadoLapiz;
     grosorInput.value = estadoActual.grosorActual;
     colorEnUso.style.backgroundColor = estadoActual.colorActual;
-    boton_dibujar.style.borderStyle = "inset";
-    boton_borrar.style.borderStyle = "outset";
 
 
 }

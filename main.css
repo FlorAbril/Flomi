@@ -21,7 +21,8 @@ canvas{
 .boton{
     cursor: pointer;
     width: 30px;
-    border-style: outset;
+   
+   
 }
 
 .elemento{
@@ -38,6 +39,7 @@ canvas{
     border: 2px solid white;
     margin: 2px;
     cursor: pointer;
+    border-radius: 50%;
 }
 .colores{
     margin: auto;
