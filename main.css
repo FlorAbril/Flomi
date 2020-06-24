@@ -24,6 +24,10 @@ canvas{
    
    
 }
+.boton:hover{
+    background-color: #a5b0f3;
+    transition: 1s;
+}
 
 .elemento{
     margin: 10px;
@@ -66,4 +70,7 @@ header{
     grid-area: header;
     display: flex;
     background: linear-gradient(0deg, transparent, #8fd84b);
+}
+#plus{
+    width:30px;
 }
