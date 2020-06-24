@@ -1,15 +1,26 @@
 const cuadro = document.getElementById("area_de_dibujo");
 const papel = cuadro.getContext("2d");
-const boton_borrar_todo = document.getElementById("boton_borrar_todo");
-const boton_borrar = document.getElementById("boton_borrar");
-const boton_dibujar = document.getElementById("boton_dibujar");
 const contenedorColores = document.querySelector(".colores");
 const grosorInput = document.getElementById("grosor");
 const colorEnUso = document.getElementById("colorEnUso");
-const boton_balde = document.getElementById("boton_balde");
 let x_dibujo; //donde comienza el trazo de dibujo
 let y_dibujo;
 let dibujando = false;
+const boton_borrar_todo = document.getElementById("boton_borrar_todo");
+const boton_borrar = document.getElementById("boton_borrar");
+const boton_dibujar = document.getElementById("boton_dibujar");
+const boton_balde = document.getElementById("boton_balde");
+const descargarDibujo = document.getElementById("descargarDibujo");
+const boton_guardar = document.getElementById("guardar");
+const botones = [boton_borrar_todo, boton_borrar, boton_dibujar, boton_balde, boton_guardar];
+
+//cuando se clickee un boton su fondo cambiara, y el de los demás quedará en blanco
+botones.map(botonClickeado =>{
+    botonClickeado.addEventListener("click", ()=>{
+        botones.map( boton => boton.style.background = "")
+        botonClickeado.style.background = "#a5b0f3";
+    })
+})
 
 const estadoLapiz = {
     colorActual : "black",
@@ -18,7 +29,7 @@ const estadoLapiz = {
 }
 const estadoGoma = {
     colorActual : "white",
-    grosorActual : 10,
+    grosorActual : 100,
     formaActual: "round"
 }
 
@@ -45,6 +56,12 @@ boton_dibujar.onclick = dibujar;
 boton_balde.onclick = pintar;
 
 cuadro.onmousedown = dibujoActivo;
+
+boton_guardar.onclick = ()=>{
+    const dibujoCanvas = cuadro.toDataURL("image/png");
+    descargarDibujo.href = dibujoCanvas;
+    descargarDibujo.click();
+}
 
 cuadro.addEventListener("mousemove", dibujarOBorrarConMouse);
 document.addEventListener("mouseup", dibujoOBorradorInactivo);
