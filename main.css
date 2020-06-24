@@ -74,3 +74,9 @@ header{
 #plus{
     width:30px;
 }
+#selectorColor{
+    align-self: center;
+    width: 25px;
+    height: 25px;
+    margin: 3px;
+}

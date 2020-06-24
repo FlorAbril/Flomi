@@ -12,7 +12,10 @@ const boton_dibujar = document.getElementById("boton_dibujar");
 const boton_balde = document.getElementById("boton_balde");
 const descargarDibujo = document.getElementById("descargarDibujo");
 const boton_guardar = document.getElementById("guardar");
-const botones = [boton_borrar_todo, boton_borrar, boton_dibujar, boton_balde, boton_guardar];
+const boton_plus = document.getElementById("plus");
+const selectorColor = document.getElementById("selectorColor");
+const boton_linea = document.getElementById("boton_linea");
+const botones = [boton_borrar_todo, boton_borrar, boton_dibujar, boton_balde, boton_guardar,boton_linea];
 
 //cuando se clickee un boton su fondo cambiara, y el de los demás quedará en blanco
 botones.map(botonClickeado =>{
@@ -54,6 +57,11 @@ boton_dibujar.onclick = dibujar;
 
 // boton balde
 boton_balde.onclick = pintar;
+
+// boton añadir color
+boton_plus.onclick = añadirColor;
+// // boton linea
+// boton_linea.onclick = crearLinea;
 
 cuadro.onmousedown = dibujoActivo;
 
@@ -146,6 +154,13 @@ const colores = ["blue","green","red","orange","yellow","pink",
                 "aquamarine","crimson","#7485e2", "#8fd84b"]; 
 
 colores.map((color)=>crearColor(color));
+
+function añadirColor(){
+    let color = selectorColor.value ;
+    crearColor(color);
+}
+
+
 
 // dibujar una linea
 function dibujarLineas(xinicial, yinicial, xfinal, yfinal) {
