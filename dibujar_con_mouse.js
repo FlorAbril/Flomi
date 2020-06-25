@@ -176,20 +176,24 @@ function dibujarLineas(xinicial, yinicial, xfinal, yfinal) {
 }
 
 
-function rellenarColor(x, y) {
+function rellenarColor(x, y, color) {
     const { width, height } = cuadro
     const imgd = papel.getImageData(0, 0, width, height);
     const data = imgd.data
     const posActual = (y * width + x) * 4
+    const listaDeIguales = new Array(width)
+    for(i=0;i<width;i++){listaDeIguales[i] = new Array(height)}
     const colorSeleccionado = [data[posActual], data[posActual + 1], data[posActual + 2], data[posActual + 3]]
-    const color = [255, 255, 0, 255]
-    for (j = x; j < width ;j++){
-        for (h = y; h < height ;h++){
+    for (j = 0; j < width ;j++){
+        for (h = 0; h < height ;h++){
             if(pixelEsIgual(data, j, h, colorSeleccionado)) {
-                cambiarPixel(data, j, h, color) }
+                listaDeIguales[h][j] = true
+                cambiarPixel(data, j, h, color) 
+            }
         }
     }
-        cambiarPixel(data, x, y, colorSeleccionado)
+
+
     papel.putImageData(imgd, 0, 0)
 }
 
@@ -205,3 +209,9 @@ function pixelEsIgual(data, x, y, color) {
     const posActual = (y * cuadro.width + x) * 4
     return data[posActual] === color[0] && data[posActual + 1] === color[1] && data[posActual + 2] === color[2] && data[posActual + 3] === color[3]
 }
+
+function esAdyacente(punto, lista){
+
+}
+
+rellenarColor(0,0, [255,0,0,255])
