@@ -181,19 +181,27 @@ function rellenarColor(x, y, color) {
     const imgd = papel.getImageData(0, 0, width, height);
     const data = imgd.data
     const posActual = (y * width + x) * 4
-    const listaDeIguales = new Array(width)
-    for(i=0;i<width;i++){listaDeIguales[i] = new Array(height)}
+    //creo una matriz con los puntos
+    const matrizDeIguales = []
+    const listaDeIguales = []
     const colorSeleccionado = [data[posActual], data[posActual + 1], data[posActual + 2], data[posActual + 3]]
-    for (j = 0; j < width ;j++){
-        for (h = 0; h < height ;h++){
-            if(pixelEsIgual(data, j, h, colorSeleccionado)) {
-                listaDeIguales[h][j] = true
-                cambiarPixel(data, j, h, color) 
+    for (yActual = 0; yActual < height ;yActual++){
+        const filaActual= []
+        for (xActual = 0; xActual < width ;xActual++){
+            const distancia = Math.sqrt(y-yActual**2 + x-xActual**2)
+            console.log(distancia)
+            if(pixelEsIgual(data, yActual, xActual, colorSeleccionado)) {
+                filaActual.push({esIgual: true,distancia,x:yActual,y:xActual,fueVisitado:false})
+            }
+            else{
+                filaActual.push({esIgual: false,distancia,x:yActual,y:xActual,fueVisitado:false})
             }
         }
+        matrizDeIguales.push(filaActual)
     }
-
-
+    console.log(matrizDeIguales.length)
+    console.log(matrizDeIguales[0].length)
+    esAdyacente({x,y}, matrizDeIguales, data, color, matrizDeIguales[matrizDeIguales.length-1][matrizDeIguales[0].length-1])
     papel.putImageData(imgd, 0, 0)
 }
 
@@ -210,8 +218,56 @@ function pixelEsIgual(data, x, y, color) {
     return data[posActual] === color[0] && data[posActual + 1] === color[1] && data[posActual + 2] === color[2] && data[posActual + 3] === color[3]
 }
 
-function esAdyacente(punto, lista){
+function esAdyacente(puntoInicial, matrizDePosiciones, data, color,finishNode){
+    const nodosVisitados = [];
+    const nodosNoVisitados = transformarALista(matrizDePosiciones);
+    console.log(nodosNoVisitados)
+    while (false) {
+        !!nodosNoVisitados.length
+    ordenarNodosPorDistancia(nodosNoVisitados);
+    const closestNode = nodosNoVisitados.shift();
+    // Si el nodo no es del mismo color
+    if (closestNode.esIgual === false)  continue;
+    // we must be trapped and should therefore stop.
+    if (closestNode.distance === Infinity) return nodosVisitados;
+    cambiarPixel(data, closestNode.x, closestNode.y, color) 
+    closestNode.fueVisitado = true;
+    nodosVisitados.push(closestNode);
+    if (closestNode.x === finishNode.x && closestNode.y === finishNode.y) return visitedNodesInOrder;
+    updateUnvisitedNeighbors(closestNode, matrizDePosiciones);
+  }
+  }
+    
 
-}
+function ordenarNodosPorDistancia(nodosNoVisitados) {
+    nodosNoVisitados.sort((nodeA, nodeB) => nodeA.distance - nodeB.distance);
+  }
 
-rellenarColor(0,0, [255,0,0,255])
+function transformarALista(matriz){
+    const pixels = [];
+  for (const fila of matriz) {
+    for (const pixel of fila) {
+        pixels.push(pixel);
+    }
+  }
+  return pixels
+  }
+
+  function updateUnvisitedNeighbors(node, grid) {
+    const unvisitedNeighbors = getUnvisitedNeighbors(node, grid);
+    for (const neighbor of unvisitedNeighbors) {
+      neighbor.distance = node.distance + 1;
+      neighbor.previousNode = node;
+    }
+  }
+
+  function getUnvisitedNeighbors(node, grid) {
+    const neighbors = [];
+    const {x,y } = node;
+    if (y > 0) neighbors.push(grid[y - 1][x]);
+    if (y < grid.length - 1) neighbors.push(grid[y + 1][x]);
+    if (x > 0) neighbors.push(grid[y][x - 1]);
+    if (x < grid[0].length - 1) neighbors.push(grid[y][x + 1]);
+    return neighbors.filter(neighbor => !neighbor.isVisited);
+  }
+
