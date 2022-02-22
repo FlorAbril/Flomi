@@ -1,82 +1,89 @@
-body{
-    background-color: blanchedalmond;
-    margin: 0;
-    background-color: #7485e2;
-    height: 100%;
-    display: grid;
-    grid-template-columns: 7fr 3fr;
-    grid-template-rows: 60px auto;
-    grid-template-areas: "header header"
-                         "canvas tools";
+body {
+  background-color: blanchedalmond;
+  margin: 0;
+  background-color: #7485e2;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 7fr 3fr;
+  grid-template-rows: 80px auto;
+  grid-template-areas:
+    "header header"
+    "canvas tools";
 }
 
-canvas{ 
-    cursor: url('./assets/lapiz.png'), pointer;
-    background-color: white;
-    border-color: #000000;
-    border-style: solid;
-    grid-area: canvas;
-    margin: 10px;
+canvas {
+  cursor: url("./assets/lapiz.png"), pointer;
+  background-color: white;
+  border-color: #000000;
+  border-style: solid;
+  grid-area: canvas;
+  margin: 10px;
 }
-.boton{
-    cursor: pointer;
-    width: 30px;
-   
-   
+.boton {
+  cursor: pointer;
+  width: 30px;
 }
-.boton:hover{
-    background-color: #a5b0f3;
-    transition: 1s;
+.boton:hover {
+  background-color: #a5b0f3;
+  transition: 1s;
 }
 
-.elemento{
-    margin: 10px;
-    grid-area: tools;
+.elemento {
+  margin: 10px;
+  grid-area: tools;
 }
-.tools{
-    text-align: center;
+.tools {
+  text-align: center;
 }
-.color{
-    display: inline-block;
-    width: 30px;
-    height: 30px;
-    border: 2px solid white;
-    margin: 2px;
-    cursor: pointer;
-    border-radius: 50%;
+.color {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  border: 1px solid white;
+  margin: 2px;
+  cursor: pointer;
+  border-radius: 50%;
 }
-.colores{
-    margin: auto;
-    margin-top: 10px;
-    width: 20vw;
-    display: flex;
-    flex-flow: wrap;
+.colores {
+  margin: auto;
+  margin-top: 10px;
+  width: 20vw;
+  display: flex;
+  flex-flow: wrap;
 }
-#grosor{
-    width: 30px;
+#grosor {
+  width: 30px;
 }
-#colorEnUso{
-    margin: 0;
-    width: 26px;
-    height: 26px;
+#colorEnUso {
+  margin: 0;
+  width: 26px;
+  height: 26px;
 }
-#logo{
-    width:auto;
-    height: 70px;
-    display: block;
-    margin: auto;
+#logo {
+  width: auto;
+  height: 70px;
+  display: block;
+  margin: auto;
 }
-header{
-    grid-area: header;
-    display: flex;
-    background: linear-gradient(0deg, transparent, #8fd84b);
+header {
+  grid-area: header;
+  display: flex;
 }
-#plus{
-    width:30px;
+#plus {
+  width: 25px;
 }
-#selectorColor{
-    align-self: center;
-    width: 25px;
-    height: 25px;
-    margin: 3px;
+
+.plusContainer {
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#selectorColor {
+  align-self: center;
+  width: 30px;
+  height: 30px;
+  margin: 2px;
+  box-sizing: content-box;
 }
