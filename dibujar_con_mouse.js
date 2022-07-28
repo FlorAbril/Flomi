@@ -6,6 +6,7 @@ const colorEnUso = document.getElementById("colorEnUso");
 let xClick; //donde comienza el trazo de dibujo
 let yClick;
 let clickeando = false;
+let colorActual = "black";
 const boton_borrar_todo = document.getElementById("boton_borrar_todo");
 const boton_borrar = document.getElementById("boton_borrar");
 const boton_dibujar = document.getElementById("boton_dibujar");
@@ -36,37 +37,30 @@ botones.map(botonClickeado => {
 
 const estadoLapiz = {
     herramientaActual: "dibujar",
-    colorActual: "black",
     grosorActual: 10,
 }
 const estadoGoma = {
     herramientaActual: "goma",
-    colorActual: "white",
     grosorActual: 20,
 }
 const estadoBalde = {
     herramientaActual: "rellenar",
-    colorActual: "white",
     grosorActual: "",
 }
 const estadoLinea = {
     herramientaActual: "linea",
-    colorActual: "black",
     grosorActual: 10, 
 }
 const estadoRectangulo = {
     herramientaActual: "rectangulo",
-    colorActual: "black",
     grosorActual: 10, 
 }
 const estadoElipse = {
     herramientaActual: "elipse",
-    colorActual: "black",
     grosorActual: 10, 
 }
 const estadoBorrarTodo = {
     herramientaActual: "borrar todo",
-    colorActual: "",
     grosorActual: 0, 
 }
 
@@ -105,39 +99,39 @@ dibujar();
 function rellenar() {
     estadoActual = estadoBalde;
     grosorInput.value = "";
-    colorEnUso.style.backgroundColor = estadoActual.colorActual;
+    colorEnUso.style.backgroundColor = colorActual;
 }
 function borrar() {
     estadoActual = estadoGoma;
     grosorInput.value = estadoActual.grosorActual;
-    colorEnUso.style.backgroundColor = estadoActual.colorActual;
+    colorEnUso.style.backgroundColor = colorActual;
 }
 function dibujar() {
     estadoActual = estadoLapiz;
     grosorInput.value = estadoActual.grosorActual;
-    colorEnUso.style.backgroundColor = estadoActual.colorActual;
+    colorEnUso.style.backgroundColor = colorActual;
 }
 
 function linea() {
     estadoActual = estadoLinea;
     grosorInput.value = estadoActual.grosorActual;
-    colorEnUso.style.backgroundColor = estadoActual.colorActual;
+    colorEnUso.style.backgroundColor = colorActual;
 }
 function rectangulo() {
     estadoActual = estadoRectangulo;
     grosorInput.value = estadoActual.grosorActual;
-    colorEnUso.style.backgroundColor = estadoActual.colorActual;
+    colorEnUso.style.backgroundColor = colorActual;
 }
 function elipse() {
     estadoActual = estadoElipse;
     grosorInput.value = estadoActual.grosorActual;
-    colorEnUso.style.backgroundColor = estadoActual.colorActual;
+    colorEnUso.style.backgroundColor = colorActual;
 }
 
 // function cambiarHerramienta(estadoNuevo){
 //     estadoActual = estadoNuevo;
 //     grosorInput.value = estadoActual.grosorActual;
-//     colorEnUso.style.backgroundColor = estadoActual.colorActual;
+//     colorEnUso.style.backgroundColor = colorActual;
 // }
 
 function clickeandoCanvas(evento) {
@@ -177,7 +171,7 @@ function desclickeando(evento) {
     if (clickeando === true) {
         switch(estadoActual.herramientaActual){
             case "rellenar":
-                rellenarColor(evento.offsetX, evento.offsetY, colorAArray(estadoActual.colorActual))
+                rellenarColor(evento.offsetX, evento.offsetY, colorAArray(colorActual))
             break; 
             case "dibujar":
                 dibujarLineas(xClick, yClick, evento.offsetX, evento.offsetY);
@@ -193,7 +187,7 @@ function desclickeando(evento) {
                 dibujarLineas(xClick, yClick, evento.offsetX, evento.offsetY);
             break;
             case "rectangulo": 
-                papel.strokeStyle = estadoActual.colorActual;
+                papel.strokeStyle = colorActual;
                 papel.lineWidth = estadoActual.grosorActual;
                 papel.strokeRect(xClick,yClick,evento.offsetX-xClick, evento.offsetY-yClick)
             break;
@@ -203,7 +197,7 @@ function desclickeando(evento) {
                 const centroX = xClick - diferenciaX / 2;
                 const centroY = yClick - diferenciaY / 2;
                 papel.beginPath()
-                papel.strokeStyle = estadoActual.colorActual;
+                papel.strokeStyle = colorActual;
                 papel.lineWidth = estadoActual.grosorActual;
                 papel.ellipse(centroX, centroY, Math.abs(diferenciaX/2), Math.abs(diferenciaY/2), 0,0,2*Math.PI)
                 papel.stroke()
@@ -230,8 +224,8 @@ const crearColor = (colorName) => {
     color.style.background = colorName
     color.title = colorName
     color.onclick = () => {
-        estadoActual.colorActual = colorName
-        colorEnUso.style.background = estadoActual.colorActual;
+        colorActual = colorName
+        colorEnUso.style.background = colorActual;
     };
     contenedorColores.appendChild(color);
 
@@ -255,7 +249,7 @@ function añadirColor(){
 // dibujar una linea
 function dibujarLineas(xinicial, yinicial, xfinal, yfinal) {
     papel.beginPath();
-    papel.strokeStyle = estadoActual.colorActual;
+    papel.strokeStyle = colorActual;
     papel.lineWidth = estadoActual.grosorActual;
     papel.lineCap = "round";
     papel.moveTo(xinicial, yinicial);
